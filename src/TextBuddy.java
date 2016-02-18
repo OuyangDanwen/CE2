@@ -232,6 +232,7 @@ public class TextBuddy {
 		else if (commandType.equalsIgnoreCase("search") &&
 				getNumberOfParameters(userCommand)
 				>= MINIMUM_PARAMETER_SIZE_FOR_SORT_OPERATION) {
+			search(userCommand);
 
 		}
 		else {
@@ -375,7 +376,7 @@ public class TextBuddy {
 		backupListForEasyDeletion.clear();
 		System.out.println(String.format(MESSAGE_FOR_SUCCESSFUL_CLEARING,fileName));
 	}
-	
+
 	/**
 	 * This method sorts the text file alphabetically.
 	 * Sorting is not case-insensitive.
@@ -389,7 +390,7 @@ public class TextBuddy {
 		Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
 		updateFile(list);//sorted text must be written to file
 	}
-	
+
 	/**
 	 * This method searches a user-specified keyword
 	 * in the text file.
@@ -397,10 +398,10 @@ public class TextBuddy {
 	 * Both exact matches and partial matches are included
 	 * in the result.
 	 */
-	private static void search(String userCommand) {
+	private static ArrayList<String> search(String userCommand) {
 		if (isFileEmpty()) {
 			System.out.println(String.format(ERROR_MESSAFGE_FOR_EMPTY_FILE, fileName));
-			return;
+			return null;
 		}
 
 		else {
@@ -410,12 +411,9 @@ public class TextBuddy {
 					(backupListForEasyDeletion, keyword);
 			ArrayList<String> partialMatchList = getPartialMatch
 					(backupListForEasyDeletion, keyword);
-			displaySearchResult(exactMatchList,partialMatchList);
-			//clear the contents after displaying the result
-			exactMatchList.clear();
-			partialMatchList.clear();
+			ArrayList<String> listForTesting = categorizeSearchResult(exactMatchList,partialMatchList);
+			return listForTesting;
 		}
-
 	}
 
 	private static ArrayList<String> getExactMatch(ArrayList<String> data,
@@ -473,13 +471,15 @@ public class TextBuddy {
 		return false;
 	}
 
-	private static void displaySearchResult(ArrayList<String> exactMatchList, 
+	private static ArrayList<String> categorizeSearchResult(ArrayList<String> exactMatchList, 
 			ArrayList<String> partialMatchList) {
 		System.out.println(String.format(MESSAGE_FOR_EXACT_MATCH, fileName));
 		printSearchResult(exactMatchList);
 		System.out.println();
 		System.out.println(String.format(MESSAGE_FOR_PARTIAL_MATCH, fileName));
 		printSearchResult(partialMatchList);
+
+		return combineTwoLists(exactMatchList, partialMatchList);
 	}
 
 	private static void printSearchResult(ArrayList<String> result) {
@@ -491,6 +491,13 @@ public class TextBuddy {
 				System.out.println(result.get(i));
 			}
 		}
+	}
+
+	public static ArrayList<String> combineTwoLists(ArrayList<String> list1, ArrayList<String> list2) {
+		for (int i = 0; i < list2.size(); i++) {
+			list1.add(list2.get(i));
+		}
+		return list1;
 	}
 
 	private static void handleInvalidCommand(String userCommand, String commandType) {
@@ -604,7 +611,7 @@ public class TextBuddy {
 		COUNTER_FOR_WRITING_TO_FILE = 
 				backupListForEasyDeletion.size() + 1;
 	}
-	
+
 	public static void initializeForTesting() {
 		fileName = "test.txt";
 		file = new File(fileName);
