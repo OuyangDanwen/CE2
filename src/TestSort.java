@@ -7,6 +7,15 @@ import java.util.ArrayList;
 import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
+/**
+ * This class is used to test the sort function in
+ * the class TextBuddy.
+ * It checks both the backup list and the file contents
+ * 
+ * @author Ouyang Danwen
+ *
+ */
+
 public class TestSort {
 
 
