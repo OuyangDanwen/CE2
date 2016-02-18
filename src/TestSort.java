@@ -9,7 +9,7 @@ public class TestSort {
 
 	@Test
 	public void test() {
-		TextBuddy.runTest();
+		TextBuddy.initializeForTesting();
 		TextBuddy.backupListForEasyDeletion.add("pair");
 		TextBuddy.backupListForEasyDeletion.add("cat");
 		TextBuddy.backupListForEasyDeletion.add("POP");

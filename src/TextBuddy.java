@@ -389,6 +389,109 @@ public class TextBuddy {
 		Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
 		updateFile(list);//sorted text must be written to file
 	}
+	
+	/**
+	 * This method searches a user-specified keyword
+	 * in the text file.
+	 * Search is case-insensitive.
+	 * Both exact matches and partial matches are included
+	 * in the result.
+	 */
+	private static void search(String userCommand) {
+		if (isFileEmpty()) {
+			System.out.println(String.format(ERROR_MESSAFGE_FOR_EMPTY_FILE, fileName));
+			return;
+		}
+
+		else {
+			String keyword = retrieveTextFromCommand(userCommand);
+			//two lists for storing search results
+			ArrayList<String> exactMatchList = getExactMatch
+					(backupListForEasyDeletion, keyword);
+			ArrayList<String> partialMatchList = getPartialMatch
+					(backupListForEasyDeletion, keyword);
+			displaySearchResult(exactMatchList,partialMatchList);
+			//clear the contents after displaying the result
+			exactMatchList.clear();
+			partialMatchList.clear();
+		}
+
+	}
+
+	private static ArrayList<String> getExactMatch(ArrayList<String> data,
+			String keyword) {
+		ArrayList<String> exactMatchList = new ArrayList<String>();
+		for (int i = 0; i < data.size(); i++) {
+			String line = data.get(i);
+			//search for exact match
+			if (isLineContainingExactKeyword(line,keyword)) {
+				exactMatchList.add(line);
+			}
+		}
+
+		return exactMatchList;	
+	}
+
+	private static ArrayList<String> getPartialMatch(ArrayList<String> data,
+			String keyword) {
+		ArrayList<String> partialMatchList = new ArrayList<String>();
+		for (int i = 0; i < data.size(); i++) {
+			String line = data.get(i);
+			//search for partial match
+			if (isLineContainingPartialKeyword(line,keyword)) {
+				partialMatchList.add(line);
+			}
+		}
+
+		return partialMatchList;
+	}
+
+	private static boolean isLineContainingExactKeyword(String line, 
+			String keyword) {
+		String[] segments = line.split(" ");
+
+		for (int i = 0; i < segments.length; i++) {
+			if (segments[i].equalsIgnoreCase(keyword)) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static boolean isLineContainingPartialKeyword(String line, 
+			String keyword) {
+		String[] segments = line.split(" ");
+
+		for (int i = 0; i < segments.length; i++) {
+			if (segments[i].toLowerCase().contains(keyword.toLowerCase()) &&
+					segments[i].length() > keyword.length()) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	private static void displaySearchResult(ArrayList<String> exactMatchList, 
+			ArrayList<String> partialMatchList) {
+		System.out.println(String.format(MESSAGE_FOR_EXACT_MATCH, fileName));
+		printSearchResult(exactMatchList);
+		System.out.println();
+		System.out.println(String.format(MESSAGE_FOR_PARTIAL_MATCH, fileName));
+		printSearchResult(partialMatchList);
+	}
+
+	private static void printSearchResult(ArrayList<String> result) {
+		if (result.isEmpty()) {
+			System.out.println(MESSAGE_FOR_EMPTY_RESULT);
+		}
+		else {
+			for (int i = 0; i < result.size(); i++) {
+				System.out.println(result.get(i));
+			}
+		}
+	}
 
 	private static void handleInvalidCommand(String userCommand, String commandType) {
 
@@ -502,7 +605,7 @@ public class TextBuddy {
 				backupListForEasyDeletion.size() + 1;
 	}
 	
-	public static void runTest() {
+	public static void initializeForTesting() {
 		fileName = "test.txt";
 		file = new File(fileName);
 		backupListForEasyDeletion = new ArrayList<String>();
