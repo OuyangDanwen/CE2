@@ -223,6 +223,17 @@ public class TextBuddy {
 				== PARAMETER_SIZE_FOR_EXIT_OPERATION) {	
 			exit();
 		}
+		else if (commandType.equalsIgnoreCase("sort") &&
+				getNumberOfParameters(userCommand)
+				== PARAMETER_SIZE_FOR_SORT_OPERATION) {
+
+
+		}
+		else if (commandType.equalsIgnoreCase("search") &&
+				getNumberOfParameters(userCommand)
+				>= MINIMUM_PARAMETER_SIZE_FOR_SORT_OPERATION) {
+
+		}
 		else {
 			handleInvalidCommand(userCommand,commandType);
 		}
@@ -365,7 +376,7 @@ public class TextBuddy {
 		System.out.println(String.format(MESSAGE_FOR_SUCCESSFUL_CLEARING,fileName));
 	}
 
-	
+
 
 
 	private static void handleInvalidCommand(String userCommand, String commandType) {
