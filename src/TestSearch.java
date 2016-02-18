@@ -16,7 +16,8 @@ public class TestSearch {
 	@Test
 	public void test() {
 		TextBuddy.initializeForTesting();
-		TextBuddy.backupListForEasyDeletion = generateAList(TextBuddy.backupListForEasyDeletion);
+		TextBuddy.backupListForEasyDeletion = generateAList(
+				TextBuddy.backupListForEasyDeletion);
 		ArrayList<String> actual = TextBuddy.search("search some");
 		
 		ArrayList<String> expected = new ArrayList<String>();
@@ -25,7 +26,8 @@ public class TestSearch {
 		
 	}
 	
-	public static ArrayList<String> generateAList(ArrayList<String> list) {
+	public static ArrayList<String> generateAList(
+			ArrayList<String> list) {
 		list.add("some");
 		list.add("someMore");
 		list.add("same but how");
@@ -34,7 +36,8 @@ public class TestSearch {
 		return list;
 	}
 	
-	public static ArrayList<String> getCorrectSearchResult(ArrayList<String> expected) {
+	public static ArrayList<String> getCorrectSearchResult(
+			ArrayList<String> expected) {
 		expected.add("some");
 		expected.add("some more things to add");
 		expected.add("someMore");

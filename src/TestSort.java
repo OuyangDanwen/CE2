@@ -28,12 +28,14 @@ public class TestSort {
 		ArrayList<String> expected = new ArrayList<String>();
 		expected = getExpectedList(expected);
 		
-		assertEquals(expected,TextBuddy.backupListForEasyDeletion);
+		assertEquals(expected,TextBuddy.
+				backupListForEasyDeletion);
 		
 		try {
 			File check = new File("check.txt");
 			writeToFile(check, expected);
-			assertTrue("The files differ!", FileUtils.contentEquals(check, TextBuddy.file));
+			assertTrue("The files differ!", FileUtils.contentEquals(
+					check, TextBuddy.file));
 			check.delete();
 			TextBuddy.file.delete();
 		} catch (IOException e) {
@@ -47,7 +49,8 @@ public class TestSort {
 		TextBuddy.backupListForEasyDeletion.add("POP");
 	}
 	
-	public static ArrayList<String> getExpectedList(ArrayList<String> expected) {
+	public static ArrayList<String> getExpectedList(
+			ArrayList<String> expected) {
 		expected.add("cat");
 		expected.add("pair");
 		expected.add("POP");
@@ -55,8 +58,10 @@ public class TestSort {
 		return expected;
 	}
 	
-	public static void writeToFile(File file, ArrayList<String> expected) throws IOException {
-		BufferedWriter bufferedFileWriter = new BufferedWriter(new FileWriter(file,true));
+	public static void writeToFile(File file, 
+			ArrayList<String> expected) throws IOException {
+		BufferedWriter bufferedFileWriter = new BufferedWriter(
+				new FileWriter(file,true));
 		for (int i = 0; i < expected.size(); i++) {
 			String text = expected.get(i);
 			bufferedFileWriter.write((i + 1) + ". " + text);

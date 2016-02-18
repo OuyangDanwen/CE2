@@ -31,8 +31,10 @@ public class TestDelete {
 		File check = new File("check.txt");
 		try {
 			writeToFile(check, expected);
-			assertEquals(expected,TextBuddy.backupListForEasyDeletion);
-			assertTrue("The files differ!", FileUtils.contentEquals(check, TextBuddy.file));
+			assertEquals(expected,TextBuddy.
+					backupListForEasyDeletion);
+			assertTrue("The files differ!", 
+					FileUtils.contentEquals(check, TextBuddy.file));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -43,12 +45,15 @@ public class TestDelete {
 
 	public void generateAList() {
 		TextBuddy.backupListForEasyDeletion.add("some");
-		TextBuddy.backupListForEasyDeletion.add("some more things");
-		TextBuddy.backupListForEasyDeletion.add("so many more things to do");
+		TextBuddy.backupListForEasyDeletion.add(
+				"some more things");
+		TextBuddy.backupListForEasyDeletion.add(
+				"so many more things to do");
 		TextBuddy.backupListForEasyDeletion.add("haha");
 	}
 
-	public ArrayList<String> getExpectedList(ArrayList<String> expected) {
+	public ArrayList<String> getExpectedList(
+			ArrayList<String> expected) {
 		expected.add("some");
 		expected.add("some more things");
 		expected.add("so many more things to do");
@@ -56,8 +61,10 @@ public class TestDelete {
 		return expected;		
 	}
 	
-	public static void writeToFile(File file, ArrayList<String> expected) throws IOException {
-		BufferedWriter bufferedFileWriter = new BufferedWriter(new FileWriter(file,true));
+	public static void writeToFile(File file, 
+			ArrayList<String> expected) throws IOException {
+		BufferedWriter bufferedFileWriter = new BufferedWriter(
+				new FileWriter(file,true));
 		for (int i = 0; i < expected.size(); i++) {
 			String text = expected.get(i);
 			bufferedFileWriter.write((i + 1) + ". " + text);

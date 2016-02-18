@@ -31,7 +31,8 @@ public class TestAdd {
 		try {
 			File check = new File("check.txt");
 			writeToFile(check, expected);
-			assertTrue("The files differ!", FileUtils.contentEquals(check, TextBuddy.file));
+			assertTrue("The files differ!", 
+					FileUtils.contentEquals(check, TextBuddy.file));
 			check.delete();
 			TextBuddy.file.delete();
 		} catch (IOException e) {
@@ -46,7 +47,8 @@ public class TestAdd {
 		TextBuddy.executeUserCommand("add","add something");
 	}
 	
-	public static ArrayList<String> getExpectedList(ArrayList<String> expected) {
+	public static ArrayList<String> getExpectedList(
+			ArrayList<String> expected) {
 		expected.add("some");
 		expected.add("more");
 		expected.add("something");
@@ -54,8 +56,10 @@ public class TestAdd {
 		return expected;
 	}
 	
-	public static void writeToFile(File file, ArrayList<String> expected) throws IOException {
-		BufferedWriter bufferedFileWriter = new BufferedWriter(new FileWriter(file,true));
+	public static void writeToFile(File file, 
+			ArrayList<String> expected) throws IOException {
+		BufferedWriter bufferedFileWriter = new BufferedWriter(
+				new FileWriter(file,true));
 		for (int i = 0; i < expected.size(); i++) {
 			String text = expected.get(i);
 			bufferedFileWriter.write((i + 1) + ". " + text);

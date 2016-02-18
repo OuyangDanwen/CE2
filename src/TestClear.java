@@ -27,7 +27,8 @@ public class TestClear {
 		try {
 			File check = new File("check.txt");
 			check.createNewFile();
-			assertTrue("The files differ!", FileUtils.contentEquals(check, TextBuddy.file));
+			assertTrue("The files differ!", FileUtils.contentEquals(
+					check, TextBuddy.file));
 			check.delete();
 			TextBuddy.file.delete();
 		} catch (IOException e) {

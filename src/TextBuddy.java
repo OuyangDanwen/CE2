@@ -119,7 +119,7 @@ public class TextBuddy {
 
 	}
 
-	private static void exitIfIncorrectArguments(String[] arguments) {
+	public static void exitIfIncorrectArguments(String[] arguments) {
 		if (arguments.length != ARGUMENT_SIZE_FOR_INITIALIZATION) {
 			System.out.println(
 					ERROR_MESSAGE_FOR_INVALID_NUMBER_OF_AGRUMENTS);
@@ -129,7 +129,7 @@ public class TextBuddy {
 
 	}
 
-	private static void sendWelcomeMessageToUser(String fileName) {
+	public static void sendWelcomeMessageToUser(String fileName) {
 		System.out.println
 		(String.format(MESSAGE_FOR_WELCOMING_USER, fileName));
 	}
@@ -141,7 +141,7 @@ public class TextBuddy {
 	 * old text file or creating a new text file which overwrites the
 	 * old one.
 	 */
-	private static void setUpEnvironment(String name) {
+	public static void setUpEnvironment(String name) {
 		fileName = name;
 		file = new File(fileName);
 		try {
@@ -167,7 +167,7 @@ public class TextBuddy {
 	 * repeatedly prompting and accepting command 
 	 * from user.
 	 */
-	private static void handleUserCommand() {
+	public static void handleUserCommand() {
 		while (true) {
 			String userCommand = scanner.nextLine();
 			String commandType = getCommandType(
@@ -176,7 +176,7 @@ public class TextBuddy {
 		}
 	}
 
-	private static boolean isEmptyCommand(String userCommand) {
+	public static boolean isEmptyCommand(String userCommand) {
 		return userCommand.isEmpty();
 	}
 
@@ -184,7 +184,7 @@ public class TextBuddy {
 	 * This method extracts and returns the command type, i.e. 
 	 * the first word from each user command
 	 */
-	private static String getCommandType(String userCommand) {
+	public static String getCommandType(String userCommand) {
 		String[] parametersFromUserCommand = userCommand.split(" ");
 		String commandType = parametersFromUserCommand[0];
 		return commandType;
