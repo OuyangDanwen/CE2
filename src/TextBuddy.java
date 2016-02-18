@@ -196,7 +196,7 @@ public class TextBuddy {
 	 * There are only five valid commands: add, delete, display, clear, exit.
 	 * The commands are not case-sensitive;
 	 */
-	private static void executeUserCommand(String commandType, String userCommand) {
+	public static void executeUserCommand(String commandType, String userCommand) {
 
 		if (commandType.equalsIgnoreCase("add") &&
 				getNumberOfParameters(userCommand)
@@ -398,7 +398,7 @@ public class TextBuddy {
 	 * Both exact matches and partial matches are included
 	 * in the result.
 	 */
-	private static ArrayList<String> search(String userCommand) {
+	public static ArrayList<String> search(String userCommand) {
 		if (isFileEmpty()) {
 			System.out.println(String.format(ERROR_MESSAFGE_FOR_EMPTY_FILE, fileName));
 			return null;
@@ -411,12 +411,12 @@ public class TextBuddy {
 					(backupListForEasyDeletion, keyword);
 			ArrayList<String> partialMatchList = getPartialMatch
 					(backupListForEasyDeletion, keyword);
-			ArrayList<String> listForTesting = categorizeSearchResult(exactMatchList,partialMatchList);
-			return listForTesting;
+			displaySearchResult(exactMatchList,partialMatchList);
+			return combineTwoLists(exactMatchList, partialMatchList);
 		}
 	}
 
-	private static ArrayList<String> getExactMatch(ArrayList<String> data,
+	public static ArrayList<String> getExactMatch(ArrayList<String> data,
 			String keyword) {
 		ArrayList<String> exactMatchList = new ArrayList<String>();
 		for (int i = 0; i < data.size(); i++) {
@@ -430,7 +430,7 @@ public class TextBuddy {
 		return exactMatchList;	
 	}
 
-	private static ArrayList<String> getPartialMatch(ArrayList<String> data,
+	public static ArrayList<String> getPartialMatch(ArrayList<String> data,
 			String keyword) {
 		ArrayList<String> partialMatchList = new ArrayList<String>();
 		for (int i = 0; i < data.size(); i++) {
@@ -444,7 +444,7 @@ public class TextBuddy {
 		return partialMatchList;
 	}
 
-	private static boolean isLineContainingExactKeyword(String line, 
+	public static boolean isLineContainingExactKeyword(String line, 
 			String keyword) {
 		String[] segments = line.split(" ");
 
@@ -457,7 +457,7 @@ public class TextBuddy {
 		return false;
 	}
 
-	private static boolean isLineContainingPartialKeyword(String line, 
+	public static boolean isLineContainingPartialKeyword(String line, 
 			String keyword) {
 		String[] segments = line.split(" ");
 
@@ -471,18 +471,16 @@ public class TextBuddy {
 		return false;
 	}
 
-	private static ArrayList<String> categorizeSearchResult(ArrayList<String> exactMatchList, 
+	public static void displaySearchResult(ArrayList<String> exactMatchList, 
 			ArrayList<String> partialMatchList) {
 		System.out.println(String.format(MESSAGE_FOR_EXACT_MATCH, fileName));
 		printSearchResult(exactMatchList);
 		System.out.println();
 		System.out.println(String.format(MESSAGE_FOR_PARTIAL_MATCH, fileName));
 		printSearchResult(partialMatchList);
-
-		return combineTwoLists(exactMatchList, partialMatchList);
 	}
 
-	private static void printSearchResult(ArrayList<String> result) {
+	public static void printSearchResult(ArrayList<String> result) {
 		if (result.isEmpty()) {
 			System.out.println(MESSAGE_FOR_EMPTY_RESULT);
 		}
