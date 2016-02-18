@@ -1,5 +1,12 @@
 import static org.junit.Assert.*;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.apache.commons.io.FileUtils;
 import org.junit.Test;
 
 public class TestDelete {
@@ -14,13 +21,17 @@ public class TestDelete {
 
 		TextBuddy.executeUserCommand("delete", "delete 1");
 		expected.remove(0);
-		assertEquals(expected,TextBuddy.backupListForEasyDeletion);
-
-		TextBuddy.executeUserCommand("delete", "delete 3");
-		expected.remove(2);
-		assertEquals(expected,TextBuddy.backupListForEasyDeletion);
-
-
+		
+		File check = new File("check.txt");
+		try {
+			writeToFile(check, expected);
+			assertEquals(expected,TextBuddy.backupListForEasyDeletion);
+			assertTrue("The files differ!", FileUtils.contentEquals(check, TextBuddy.file));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		check.delete();
+		TextBuddy.file.delete();
 
 	}
 
@@ -37,6 +48,17 @@ public class TestDelete {
 		expected.add("so many more things to do");
 		expected.add("haha");
 		return expected;		
+	}
+	
+	public static void writeToFile(File file, ArrayList<String> expected) throws IOException {
+		BufferedWriter bufferedFileWriter = new BufferedWriter(new FileWriter(file,true));
+		for (int i = 0; i < expected.size(); i++) {
+			String text = expected.get(i);
+			bufferedFileWriter.write((i + 1) + ". " + text);
+			bufferedFileWriter.newLine();
+			bufferedFileWriter.flush();
+		}
+		bufferedFileWriter.close();
 	}
 
 }
