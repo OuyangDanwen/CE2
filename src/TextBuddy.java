@@ -27,6 +27,7 @@ import java.util.Scanner;
  * after every operation to prevent undesired loss of unsaved data due to unforeseen 
  * physical failure;
  * 2. The lines of text in the text file are reordered after every deletion operation.
+ * 3. All methods are kept public to facilitate testing only.
  * 
  * Additional Features: 
  * 1. TextBuddy re-prompts command from user instead of exiting the program immediately 
@@ -522,7 +523,7 @@ public class TextBuddy {
 
 	public static void exit() {
 		scanner.close();
-		System.exit(-1);
+		System.exit(0);
 	}
 
 	public static boolean isFileEmpty() {
