@@ -10,7 +10,7 @@ import org.junit.Test;
 /**
  * This class is used to test the sort function in
  * the class TextBuddy.
- * It checks both the backup list and the file contents
+ * It checks both the backup list and the file contents.
  * 
  * @author Ouyang Danwen
  *

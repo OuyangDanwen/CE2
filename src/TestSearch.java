@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * This class is used to test the search function in
  * the class TextBuddy.
- * It checks both the result list
+ * It checks both the result list.
  * 
  * @author Ouyang Danwen
  *
