@@ -226,7 +226,7 @@ public class TextBuddy {
 		else if (commandType.equalsIgnoreCase("sort") &&
 				getNumberOfParameters(userCommand)
 				== PARAMETER_SIZE_FOR_SORT_OPERATION) {
-			sort(backupListForEasyDeletion);
+			sort();
 
 		}
 		else if (commandType.equalsIgnoreCase("search") &&
@@ -375,13 +375,17 @@ public class TextBuddy {
 		backupListForEasyDeletion.clear();
 		System.out.println(String.format(MESSAGE_FOR_SUCCESSFUL_CLEARING,fileName));
 	}
-
+	
 	/**
 	 * This method sorts the text file alphabetically.
 	 * Sorting is not case-insensitive.
 	 */
-	public static ArrayList<String> sort(ArrayList<String> list) {
+	public static void sort() {
+		sort(backupListForEasyDeletion);
 		System.out.println(String.format(MESSAGE_FOR_SORTING_TEXT, fileName));
+	}
+
+	public static ArrayList<String> sort(ArrayList<String> list) {
 		Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
 		//updateFile(list);//sorted text must be written to file
 		return list;
@@ -497,5 +501,10 @@ public class TextBuddy {
 	private static void resetCounter() {
 		COUNTER_FOR_WRITING_TO_FILE = 
 				backupListForEasyDeletion.size() + 1;
+	}
+	
+	public static void runTest() {
+		fileName = "test.txt";
+		backupListForEasyDeletion = new ArrayList<String>();
 	}
 }
