@@ -53,12 +53,12 @@ public class TextBuddy {
 	private static final int MINIMUM_PARAMETER_SIZE_FOR_ADD_OPERATION = 2;
 
 	//List of common variables for easy access across the program
-	private static String fileName;
-	private static File file;
+	public static String fileName;
+	public static File file;
 	// this list is used solely for the ease of deletion
-	private static ArrayList<String> backupListForEasyDeletion;
-	private static int COUNTER_FOR_WRITING_TO_FILE;
-	private static Scanner scanner = new Scanner(System.in);
+	public static ArrayList<String> backupListForEasyDeletion;
+	public static int COUNTER_FOR_WRITING_TO_FILE;
+	public static Scanner scanner = new Scanner(System.in);
 
 	//List of common messages used in TextBuddy
 	private static final String MESSAGE_FOR_RESTORATION_OPTIONS = 
@@ -385,10 +385,9 @@ public class TextBuddy {
 		System.out.println(String.format(MESSAGE_FOR_SORTING_TEXT, fileName));
 	}
 
-	public static ArrayList<String> sort(ArrayList<String> list) {
+	public static void sort(ArrayList<String> list) {
 		Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
-		//updateFile(list);//sorted text must be written to file
-		return list;
+		updateFile(list);//sorted text must be written to file
 	}
 
 	private static void handleInvalidCommand(String userCommand, String commandType) {
@@ -505,6 +504,7 @@ public class TextBuddy {
 	
 	public static void runTest() {
 		fileName = "test.txt";
+		file = new File(fileName);
 		backupListForEasyDeletion = new ArrayList<String>();
 	}
 }
