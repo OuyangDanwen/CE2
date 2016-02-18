@@ -13,14 +13,14 @@ import java.util.Scanner;
  * 
  * This class allows the user to store text, delete text, display text and clear text on a ".txt" file.
  * It supports the following command-line operations:
- *            Functionalities                                             Command format 
- * 1. add: add a specific line to the file                            add <specific text>
- * 2. delete: delete a specific line from the file                    delete <specific line number>
- * 3. display: display all texts in the file line by line             display
- * 4. clear: clear all texts in the file                              clear
- * 5. sort: case-insensitively sort all texts alphabetically          sort
- * 6. search: case-insensitively search for a keyword in the file     search <keyword>
- * 7. exit: exit the program                                          exit
+ *            Functionalities                                         Command format 
+ * 1. add: add a specific line to the file                         add <specific text>
+ * 2. delete: delete a specific line from the file                 delete <specific line number>
+ * 3. display: display all texts in the file line by line          display
+ * 4. clear: clear all texts in the file                           clear
+ * 5. sort: case-insensitively sort all texts alphabetically       sort
+ * 6. search: case-insensitively search for a keyword in the file  search <keyword>
+ * 7. exit: exit the program                                       exit
  * 
  * Note: 
  * 1. There is no specific "save" command in TextBuddy as automatic saving is done 
