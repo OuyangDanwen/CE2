@@ -157,7 +157,38 @@ public class TextBuddyTest {
 		cleanUpStreams();
 		TextBuddy.clearUpForTesting();
 	}
+    
+	@Test
+	public void testSort() throws IOException {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
+		addRandomEntriesToFile();
 
+		//execute the command
+		TextBuddy.executeUserCommand("sort", "sort");
+
+		//test message correctness
+		assertEquals("test.txt sorted alphabetically\r\n", 
+				outContent.toString());
+
+		//test whether the entries are sorted correctly
+		assertEquals("1. just for some fun", TextBuddy.readLine());
+
+		//supposed to delete "Not really"
+		//so "just for fun" will be printed again
+		TextBuddy.executeUserCommand("delete", "delete 2");
+		assertEquals("1. just for some fun", TextBuddy.readLine());
+
+		//supposed to delete "just for fun"
+		//so "sort out someThings to consider" will be printed
+		TextBuddy.executeUserCommand("delete", "delete 1");
+		assertEquals("1. sort out someThings to consider", 
+				TextBuddy.readLine());
+
+		//clean up
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
 
 	private void setUpStreams() {
 		System.setOut(new PrintStream(outContent));
