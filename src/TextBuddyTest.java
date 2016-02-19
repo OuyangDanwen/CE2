@@ -90,8 +90,30 @@ public class TextBuddyTest {
 		TextBuddy.clearUpForTesting();
 	}
 
+	@Test
+	public void testClear() throws IOException {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
 
-	
+		TextBuddy.addToFileTesting("add hello boys");
+		//to make sure the text is really written to file
+		assertEquals("1. add hello boys", TextBuddy.readLine());
+
+		//execute the command
+		TextBuddy.executeUserCommand("clear", "clear");
+
+		//test message correctness
+		assertEquals("All content deleted from test.txt\r\n", 
+				outContent.toString());
+
+		//test file content
+		assertEquals(null, TextBuddy.readLine());
+
+		//clean up
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
+
 	private void setUpStreams() {
 		System.setOut(new PrintStream(outContent));
 	}
