@@ -56,11 +56,6 @@ public class TextBuddyTest {
 		//test file content
 		assertEquals(null, TextBuddy.readLine());
 
-		//setUpStreams();
-		//TextBuddy.executeUserCommand("delete", "delete 1");
-		//assertEquals("Cannot delete from empty file, please try again\r\n", outContent.toString());
-
-
 		//clean up
 		cleanUpStreams();
 		TextBuddy.clearUpForTesting();
