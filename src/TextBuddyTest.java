@@ -113,6 +113,51 @@ public class TextBuddyTest {
 		cleanUpStreams();
 		TextBuddy.clearUpForTesting();
 	}
+	
+	/**
+	 * This method tests valid display 
+	 * from a non-empty file
+	 */
+	@Test
+	public void testDisplay1() {
+		TextBuddy.initializeForTesting("test.txt");
+		addRandomEntriesToFile();
+		setUpStreams();
+
+		//execute the command
+		TextBuddy.executeUserCommand("display", "display");
+
+		//test the message displayed to user
+		assertEquals("1. sort out someThings to consider\r\n" 
+				+ "2. just for some fun\r\n" +
+				"3. Not really\r\n", outContent.toString());
+
+		//clean up
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+
+	}
+
+	/**
+	 * This method tests invalid display
+	 * from an empty file
+	 */
+	@Test
+	public void testDisplay2() {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
+
+		//execute the command
+		TextBuddy.executeUserCommand("display", "display");
+
+		//test the message displayed to user
+		assertEquals("test.txt is empty\r\n", outContent.toString());
+
+		//clean up
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
+
 
 	private void setUpStreams() {
 		System.setOut(new PrintStream(outContent));
