@@ -36,6 +36,59 @@ public class TextBuddyTest {
 		cleanUpStreams();
 		TextBuddy.clearUpForTesting();
 	}
+	
+	/**
+	 * This method tests valid deletion
+	 */
+	@Test
+	public void testDelete1() throws IOException {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
+
+		//execute the command
+		TextBuddy.addToFileTesting("hello boys");
+		TextBuddy.executeUserCommand("delete", "delete 1");
+
+		//test message correctness
+		assertEquals("Deleted from test.txt: \"hello boys\"\r\n",
+				outContent.toString());
+
+		//test file content
+		assertEquals(null, TextBuddy.readLine());
+
+		//setUpStreams();
+		//TextBuddy.executeUserCommand("delete", "delete 1");
+		//assertEquals("Cannot delete from empty file, please try again\r\n", outContent.toString());
+
+
+		//clean up
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
+
+	/** 
+	 * This method tests invalid deletion from
+	 * an empty file
+	 */
+	@Test
+	public void testDelete2() throws IOException {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
+
+		//execute the command
+		TextBuddy.executeUserCommand("delete", "delete 1");
+
+		//test message correctness
+		assertEquals("Cannot delete from empty file, please try again\r\n",
+				outContent.toString());
+
+		//test file content
+		assertEquals(null, TextBuddy.readLine());
+
+		//clean up
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
 
 
 	private void setUpStreams() {
