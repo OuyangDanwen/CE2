@@ -91,6 +91,7 @@ public class TextBuddyTest {
 	}
 
 
+	
 	private void setUpStreams() {
 		System.setOut(new PrintStream(outContent));
 	}
