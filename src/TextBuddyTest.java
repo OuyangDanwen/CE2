@@ -19,6 +19,23 @@ public class TextBuddyTest {
 	//for testing standard-out display
 	private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
 
+	@Test
+	public void testAdd() throws IOException {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
+
+		//execute the command
+		TextBuddy.executeUserCommand("add", "add hello boys");
+
+		//test message correctness
+		assertEquals("Added to test.txt: \"hello boys\"\r\n", outContent.toString());
+
+		//test file content
+		assertEquals("1. hello boys", TextBuddy.readLine());
+
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
 
 
 	private void setUpStreams() {
