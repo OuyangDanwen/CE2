@@ -189,6 +189,25 @@ public class TextBuddyTest {
 		cleanUpStreams();
 		TextBuddy.clearUpForTesting();
 	}
+	
+	@Test
+	public void testSearch() {
+		TextBuddy.initializeForTesting("test.txt");
+		setUpStreams();
+		addRandomEntriesToFile();
+
+		//execute the command
+		TextBuddy.executeUserCommand("search", "search some");
+
+		//test the correctness of the printed result
+		assertEquals("Exact matches from test.txt:\r\n" +
+				"just for some fun\r\n\r\n" +
+				"Partial matches from test.txt:\r\n" + 
+				"sort out someThings to consider\r\n", outContent.toString());
+
+		cleanUpStreams();
+		TextBuddy.clearUpForTesting();
+	}
 
 	private void setUpStreams() {
 		System.setOut(new PrintStream(outContent));
