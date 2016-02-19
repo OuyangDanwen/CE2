@@ -27,7 +27,7 @@ import java.util.Scanner;
  * after every operation to prevent undesired loss of unsaved data due to unforeseen 
  * physical failure;
  * 2. The lines of text in the text file are reordered after every deletion operation.
- * 3. All methods are kept public to facilitate testing only.
+ * 3. A few methods are kept public to facilitate testing only.
  * 
  * Additional Features: 
  * 1. TextBuddy re-prompts command from user instead of exiting the program immediately 
@@ -54,12 +54,12 @@ public class TextBuddy {
 	private static final int MINIMUM_PARAMETER_SIZE_FOR_ADD_OPERATION = 2;
 
 	//List of common variables for easy access across the program
-	public static String fileName;
-	public static File file;
+	private static String fileName;
+	private static File file;
 	// this list is used solely for the ease of deletion
-	public static ArrayList<String> backupListForEasyDeletion;
-	public static int COUNTER_FOR_WRITING_TO_FILE;
-	public static Scanner scanner = new Scanner(System.in);
+	private static ArrayList<String> backupListForEasyDeletion;
+	private static int COUNTER_FOR_WRITING_TO_FILE;
+	private static Scanner scanner = new Scanner(System.in);
 
 	//List of common messages used in TextBuddy
 	private static final String MESSAGE_FOR_RESTORATION_OPTIONS = 
@@ -77,6 +77,7 @@ public class TextBuddy {
 			"Exact matches from %s:";
 	private static final String MESSAGE_FOR_PARTIAL_MATCH = 
 			"Partial matches from %s:";
+	private static final String MESSAGE_FOR_NO_MATCH_FOUND = "No matches found in %s";
 	private static final String MESSAGE_FOR_EMPTY_RESULT = "Nil";
 	private static final String ERROR_MESSAFGE_FOR_EMPTY_FILE = "%s is empty";
 	private static final String ERROR_MESSAGE_FOR_INCORRECT_USAGE_OF_PROGRAM = 
@@ -120,7 +121,7 @@ public class TextBuddy {
 
 	}
 
-	public static void exitIfIncorrectArguments(String[] arguments) {
+	private static void exitIfIncorrectArguments(String[] arguments) {
 		if (arguments.length != ARGUMENT_SIZE_FOR_INITIALIZATION) {
 			System.out.println(
 					ERROR_MESSAGE_FOR_INVALID_NUMBER_OF_AGRUMENTS);
@@ -130,7 +131,7 @@ public class TextBuddy {
 
 	}
 
-	public static void sendWelcomeMessageToUser(String fileName) {
+	private static void sendWelcomeMessageToUser(String fileName) {
 		System.out.println
 		(String.format(MESSAGE_FOR_WELCOMING_USER, fileName));
 	}
@@ -142,7 +143,7 @@ public class TextBuddy {
 	 * old text file or creating a new text file which overwrites the
 	 * old one.
 	 */
-	public static void setUpEnvironment(String name) {
+	private static void setUpEnvironment(String name) {
 		fileName = name;
 		file = new File(fileName);
 		try {
@@ -168,7 +169,7 @@ public class TextBuddy {
 	 * repeatedly prompting and accepting command 
 	 * from user.
 	 */
-	public static void handleUserCommand() {
+	private static void handleUserCommand() {
 		while (true) {
 			String userCommand = scanner.nextLine();
 			String commandType = getCommandType(
@@ -177,7 +178,7 @@ public class TextBuddy {
 		}
 	}
 
-	public static boolean isEmptyCommand(String userCommand) {
+	private static boolean isEmptyCommand(String userCommand) {
 		return userCommand.isEmpty();
 	}
 
@@ -185,7 +186,7 @@ public class TextBuddy {
 	 * This method extracts and returns the command type, i.e. 
 	 * the first word from each user command
 	 */
-	public static String getCommandType(String userCommand) {
+	private static String getCommandType(String userCommand) {
 		String[] parametersFromUserCommand = userCommand.split(" ");
 		String commandType = parametersFromUserCommand[0];
 		return commandType;
@@ -245,7 +246,7 @@ public class TextBuddy {
 	 * This method determines and returns the number of parameters 
 	 * in the user command for further checking
 	 */
-	public static int getNumberOfParameters(String userCommand) {
+	private static int getNumberOfParameters(String userCommand) {
 		String[] segments = userCommand.split(" ");
 		int numberOfParameters = segments.length;
 		return numberOfParameters;
@@ -257,7 +258,7 @@ public class TextBuddy {
 	 * The decision whether to restore or create a new file
 	 * is at sole discretion of the user.
 	 */
-	public static boolean isPossibleForRestoration() {
+	private static boolean isPossibleForRestoration() {
 
 		String line;
 		try {
@@ -276,12 +277,12 @@ public class TextBuddy {
 		return backupListForEasyDeletion.size() != 0; //only possible when non-empty
 	}
 
-	public static String getOriginalText(String line) {
+	private static String getOriginalText(String line) {
 		int index = line.indexOf(".");
 		return line.substring(index + 2);
 	}
 
-	public static void askUserForRestorationDecisionAndExecute() {
+	private static void askUserForRestorationDecisionAndExecute() {
 
 		System.out.println("A past file named " + fileName + " is found");
 		System.out.println(MESSAGE_FOR_RESTORATION_OPTIONS);
@@ -291,7 +292,7 @@ public class TextBuddy {
 		}
 	}
 
-	public static void addText(String userCommand) {
+	private static void addText(String userCommand) {
 
 		String originalText = retrieveTextFromCommand(userCommand);
 		String textToAdd = COUNTER_FOR_WRITING_TO_FILE + ". " 
@@ -305,7 +306,7 @@ public class TextBuddy {
 				fileName,originalText));
 	}
 
-	public static void writeToFileLineByLine(String text) {
+	private static void writeToFileLineByLine(String text) {
 		try {
 			BufferedWriter bufferedFileWriter = new BufferedWriter(new 
 					FileWriter(file,true));
@@ -319,7 +320,7 @@ public class TextBuddy {
 		}
 	}
 
-	public static void deleteText(String userCommand) {
+	private static void deleteText(String userCommand) {
 
 		int lineNumberToDelete = Integer.parseInt(
 				retrieveTextFromCommand(userCommand));
@@ -350,7 +351,7 @@ public class TextBuddy {
 	 * file is not empty.
 	 * Otherwise, it informs the user that the file is empty.
 	 */
-	public static void displayText() {
+	private static void displayText() {
 
 		if (isFileEmpty()) {
 			System.out.println(String.format(ERROR_MESSAFGE_FOR_EMPTY_FILE, fileName));
@@ -372,7 +373,7 @@ public class TextBuddy {
 		}
 	}
 
-	public static void clearText() {
+	private static void clearText() {
 		clearFile();
 		backupListForEasyDeletion.clear();
 		System.out.println(String.format(MESSAGE_FOR_SUCCESSFUL_CLEARING,fileName));
@@ -382,12 +383,12 @@ public class TextBuddy {
 	 * This method sorts the text file alphabetically.
 	 * Sorting is not case-insensitive.
 	 */
-	public static void sort() {
+	private static void sort() {
 		sort(backupListForEasyDeletion);
 		System.out.println(String.format(MESSAGE_FOR_SORTING_TEXT, fileName));
 	}
 
-	public static void sort(ArrayList<String> list) {
+	private static void sort(ArrayList<String> list) {
 		Collections.sort(list, String.CASE_INSENSITIVE_ORDER);
 		updateFile(list);//sorted text must be written to file
 	}
@@ -399,10 +400,9 @@ public class TextBuddy {
 	 * Both exact matches and partial matches are included
 	 * in the result.
 	 */
-	public static ArrayList<String> search(String userCommand) {
+	private static void search(String userCommand) {
 		if (isFileEmpty()) {
 			System.out.println(String.format(ERROR_MESSAFGE_FOR_EMPTY_FILE, fileName));
-			return null;
 		}
 
 		else {
@@ -412,12 +412,17 @@ public class TextBuddy {
 					(backupListForEasyDeletion, keyword);
 			ArrayList<String> partialMatchList = getPartialMatch
 					(backupListForEasyDeletion, keyword);
-			displaySearchResult(exactMatchList,partialMatchList);
-			return combineTwoLists(exactMatchList, partialMatchList);
+
+			if (exactMatchList.isEmpty() && partialMatchList.isEmpty()) {
+				System.out.print(String.format(MESSAGE_FOR_NO_MATCH_FOUND, fileName));
+			}
+			else {
+				displaySearchResult(exactMatchList,partialMatchList);
+			}
 		}
 	}
 
-	public static ArrayList<String> getExactMatch(ArrayList<String> data,
+	private static ArrayList<String> getExactMatch(ArrayList<String> data,
 			String keyword) {
 		ArrayList<String> exactMatchList = new ArrayList<String>();
 		for (int i = 0; i < data.size(); i++) {
@@ -431,7 +436,7 @@ public class TextBuddy {
 		return exactMatchList;	
 	}
 
-	public static ArrayList<String> getPartialMatch(ArrayList<String> data,
+	private static ArrayList<String> getPartialMatch(ArrayList<String> data,
 			String keyword) {
 		ArrayList<String> partialMatchList = new ArrayList<String>();
 		for (int i = 0; i < data.size(); i++) {
@@ -445,7 +450,7 @@ public class TextBuddy {
 		return partialMatchList;
 	}
 
-	public static boolean isLineContainingExactKeyword(String line, 
+	private static boolean isLineContainingExactKeyword(String line, 
 			String keyword) {
 		String[] segments = line.split(" ");
 
@@ -458,7 +463,7 @@ public class TextBuddy {
 		return false;
 	}
 
-	public static boolean isLineContainingPartialKeyword(String line, 
+	private static boolean isLineContainingPartialKeyword(String line, 
 			String keyword) {
 		String[] segments = line.split(" ");
 
@@ -472,7 +477,7 @@ public class TextBuddy {
 		return false;
 	}
 
-	public static void displaySearchResult(ArrayList<String> exactMatchList, 
+	private static void displaySearchResult(ArrayList<String> exactMatchList, 
 			ArrayList<String> partialMatchList) {
 		System.out.println(String.format(MESSAGE_FOR_EXACT_MATCH, fileName));
 		printSearchResult(exactMatchList);
@@ -481,7 +486,7 @@ public class TextBuddy {
 		printSearchResult(partialMatchList);
 	}
 
-	public static void printSearchResult(ArrayList<String> result) {
+	private static void printSearchResult(ArrayList<String> result) {
 		if (result.isEmpty()) {
 			System.out.println(MESSAGE_FOR_EMPTY_RESULT);
 		}
@@ -491,19 +496,9 @@ public class TextBuddy {
 			}
 		}
 	}
-    
-	/**
-	 *This method is created for the ease of testing
-	 *so that an easy comparison between lists is possible
-	 */
-	public static ArrayList<String> combineTwoLists(ArrayList<String> list1, ArrayList<String> list2) {
-		for (int i = 0; i < list2.size(); i++) {
-			list1.add(list2.get(i));
-		}
-		return list1;
-	}
 
-	public static void handleInvalidCommand(String userCommand, String commandType) {
+
+	private static void handleInvalidCommand(String userCommand, String commandType) {
 
 		if (isEmptyCommand(userCommand)) {//empty command
 			System.out.println(ERROR_MESSAGE_FOR_EMPTY_COMMAND);
@@ -521,12 +516,12 @@ public class TextBuddy {
 		}
 	}
 
-	public static void exit() {
+	private static void exit() {
 		scanner.close();
 		System.exit(0);
 	}
 
-	public static boolean isFileEmpty() {
+	private static boolean isFileEmpty() {
 		//the file is empty when the back up list empty
 		return backupListForEasyDeletion.size() == 0;
 	}
@@ -536,7 +531,7 @@ public class TextBuddy {
 	 * if applicable.
 	 * The operation name is discarded.
 	 */
-	public static String retrieveTextFromCommand(String userCommand) {
+	private static String retrieveTextFromCommand(String userCommand) {
 
 		String segments[] = userCommand.split(" ");
 		int numberOfSegments = segments.length;
@@ -549,7 +544,7 @@ public class TextBuddy {
 		return text.trim();
 	}
 
-	public static void clearFile() {
+	private static void clearFile() {
 
 		file.delete(); 
 		file = new File(fileName); 
@@ -562,14 +557,14 @@ public class TextBuddy {
 		resetCounter();
 	}
 
-	public static boolean isPossibleToDelete (int lineNumberToDelete) {
+	private static boolean isPossibleToDelete (int lineNumberToDelete) {
 		//deletion is only possible with positive integer line number 
 		//which are within the size of the size of the back up list
 		return lineNumberToDelete <= backupListForEasyDeletion.size() 
 				&& lineNumberToDelete >= 1;
 	}
 
-	public static String updateBackupList(int listEntryToDelete) {
+	private static String updateBackupList(int listEntryToDelete) {
 		//remove the user-specified entry from the list
 		return backupListForEasyDeletion.remove(listEntryToDelete);
 	}
@@ -579,7 +574,7 @@ public class TextBuddy {
 	 * the text file with data from the backup list with the specific
 	 * line of text removed or after sorting 
 	 */
-	public static void updateFile(ArrayList<String> list) {
+	private static void updateFile(ArrayList<String> list) {
 
 		clearFile();//clear the file for rewriting after deletion or sorting
 
@@ -602,27 +597,63 @@ public class TextBuddy {
 		}
 	}
 
-	public static void overwritesPastFile() {
+	private static void overwritesPastFile() {
 		//also clear the backup list while overwriting
 		backupListForEasyDeletion.clear();
 		clearFile();
 		System.out.println("Overwriting is successful with a new " 
 				+ fileName + " created");
 	}
-    
-	public static void resetCounter() {
+
+	private static void resetCounter() {
 		COUNTER_FOR_WRITING_TO_FILE = 
 				backupListForEasyDeletion.size() + 1;
 	}
-	
 	/**
-	 * This method is created solely for the ease
-	 * of testing
+	 * This method is solely for testing purposes
+	 * which read a line from the file
 	 */
-	public static void initializeForTesting() {
-		fileName = "test.txt";
+	public static String readLine() throws IOException {
+		BufferedReader reader = new BufferedReader(new 
+				FileReader(file));
+		String line = reader.readLine();
+		reader.close();
+		return line;
+	}
+
+	/**
+	 * This method sets up the environment for testing
+	 */
+	public static void initializeForTesting(String name) {
+		fileName = name;
 		file = new File(fileName);
-		backupListForEasyDeletion = new ArrayList<String>();
+		try {
+			file.createNewFile();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		backupListForEasyDeletion = new ArrayList<String>(); 
 		resetCounter();
+	}
+
+	/**
+	 * This method dose clean-up after testing
+	 */
+	public static void clearUpForTesting() {
+		file.delete();
+		backupListForEasyDeletion.clear();
+		resetCounter();
+	}
+
+	/**
+	 * This method is used solely for testing
+	 * which adds a line of text to the file
+	 */
+	public static void addToFileTesting(String text) {
+		String textToAdd = COUNTER_FOR_WRITING_TO_FILE
+				+ ". " + text;
+		writeToFileLineByLine(textToAdd);
+		COUNTER_FOR_WRITING_TO_FILE++;
+		backupListForEasyDeletion.add(text);
 	}
 }
